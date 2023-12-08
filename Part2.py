@@ -2,16 +2,27 @@ def identify_snow_terms(line):
     snow_terms = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
     identified_terms = []
 
-    # Check for each snow term in the line
     for term in snow_terms:
-        if term in line:
-            identified_terms.append(term)
+        # Find all occurrences of the term in the line
+        start_index = 0
+        while start_index < len(line):
+            if line.startswith(term, start_index):
+                identified_terms.append((term, start_index))
+                start_index += len(term)
+            else:
+                start_index += 1
 
-    return identified_terms
+    # Sort the identified terms based on the start index
+    identified_terms.sort(key=lambda x: x[1])
+
+    # Extract the sorted terms from the tuples
+    sorted_terms = [term for term, _ in identified_terms]
+
+    return sorted_terms
 
 def process_file():
     input_file = 'input.txt'
-    output_file = 'output.txt'
+    output_file = 'output2.txt'
 
     # Create the snow dictionary
     snow = {0: "zero", 1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"}
@@ -30,5 +41,3 @@ def process_file():
 
 # Use the function to process the files
 process_file()
-
-
